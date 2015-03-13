@@ -22,11 +22,16 @@ class java::jenv(
   }
 
   file { "${prefix}/versions":
-    ensure  => symlink,
+    ensure  => directory,
     force   => true,
     backup  => false,
-    target  => '/opt/javas',
     require => Repository[$prefix],
+  }
+
+  file { $prefix:
+    ensure => directory,
+    owner  => $boxen_user,
+    require => Repository[$prefix]
   }
 
 }

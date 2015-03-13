@@ -1,0 +1,5 @@
+export JENV_ROOT=<%= scope.lookupvar("::java::jenv::prefix") %>
+
+export PATH="<%= scope.lookupvar("::java::jenv::prefix") %>/bin:$PATH"
+
+eval "$(jenv init -)"

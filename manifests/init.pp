@@ -8,25 +8,28 @@ class java(
   $prefix   = $java::prefix,
   $user     = $java::user,
 ) {
+
+  include java::jenv
+
   if $::osfamily == 'Darwin' {
     include boxen::config
-  }
 
-  include java::pyenv
-
-  if $::osfamily == 'Darwin' {
-    boxen::env_script { 'pyenv':
-      content  => template('java/pyenv.sh.erb'),
+    boxen::env_script { 'jenv':
+      content  => template('java/jenv.sh.erb'),
       priority => 'higher'
+    }
+
+    $wrapper = "${boxen::config::bindir}/java"
+    
+    file { $wrapper:
+        source  => 'puppet:///modules/java/java.sh',
+        mode    => '0755',
     }
   }
 
-  file { '/opt/java':
-    ensure => directory,
-    owner  => $user,
-  }
+
+
 
   Class['java::jenv'] ->
-    Python::Version <| |> ->
-    Python::Plugin <| |>
-}}
+    Java::Version <| |>
+}

@@ -1,0 +1,11 @@
+---
+java::version::alias:
+  "1.7.0_71": "7u71"
+  "1.8.0_31": "8u31"
+  
+java::prefix: '/opt'
+java::user: "%{::id}"
+
+java::jenv::ensure: 0.4.2
+java::jenv::prefix: "%{hiera('java::prefix')}/jenv"
+java::jenv::user: "%{hiera('java::user')}"
