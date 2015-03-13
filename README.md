@@ -4,10 +4,10 @@ Install Java versions using [jenv](https://github.com/yyuu/jenv). Module based o
 
 ## Usage
 
+Supported versions can be found [here](https://github.com/Betterment/puppet-jenv/blob/master/data/common.yaml).
+
 ```puppet
 # Install Java versions 
-
-Supported versions can be found [here](https://github.com/Betterment/puppet-jenv/blob/master/data/common.yaml).
 
 java::version { '1.7.0_71': }
 java::version { '1.8.0_31': }
