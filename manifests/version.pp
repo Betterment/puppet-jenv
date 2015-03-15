@@ -30,7 +30,6 @@ define java::version(
 
     $jre_url = "${base_download_url}/jre-${version}-macosx-x64.dmg"
     $jdk_url = "${base_download_url}/jdk-${version}-macosx-x64.dmg"
-
     # if ((versioncmp($::macosx_productversion_major, '10.10') >= 0) and
     #   versioncmp($update_version, '71') < 0)
     # {
@@ -49,6 +48,5 @@ define java::version(
         provider => pkgdmg,
         source   => $jdk_url ;
     }
-
   }
 }

@@ -29,21 +29,39 @@ define java::alias (
 
   $sys_version = java_download_version_to_sys_version($to)
   $jdk_dir = "/Library/Java/JavaVirtualMachines/jdk${version}.jdk"
-  $applet_dir = "/Library/Internet Plug-Ins/JavaAppletPlugin.Plug-Ins"
-  $prefpane_link = "/Library/PreferencePanes/JavaControlPanel.prefPane"
   $jenv_versions = "${java::jenv::prefix}/versions"
-
-  # file { [$prefpane_link]:
-  #   ensure  => $link_ensure,
-  #   target  => "${applet_dir}/Contents/Home/lib/deploy/JavaControlPanel.prefPane",
-  #   force   => true,
-  #   require => Java::Version[$to]
-  # } 
+  $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
 
   file { [$jdk_dir]:
     ensure  => $dir_ensure,
     force   => true
   } 
+
+  # Allow 'large' keys locally.
+  # http://www.ngs.ac.uk/tools/jcepolicyfiles
+  file { $sec_dir:
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'wheel',
+    mode    => '0775',
+    require => File[$jdk_dir]
+  }
+
+  file { "${sec_dir}/local_policy.jar":
+    source  => 'puppet:///modules/java/local_policy.jar',
+    owner   => 'root',
+    group   => 'wheel',
+    mode    => '0664',
+    require => File[$sec_dir]
+  }
+
+  file { "${sec_dir}/US_export_policy.jar":
+    source  => 'puppet:///modules/java/US_export_policy.jar',
+    owner   => 'root',
+    group   => 'wheel',
+    mode    => '0664',
+    require => File[$sec_dir]
+  }
 
   # add the version to jenv - use jenv's add in the future?
   file { "${jenv_versions}/${version}":
