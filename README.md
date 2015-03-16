@@ -1,4 +1,4 @@
-# Java Puppet Module for Boxen
+# Java Puppet Module for Boxen ![](https://travis-ci.org/Betterment/puppet-jenv.svg)
 
 Install Java versions using [jenv](https://github.com/yyuu/jenv). Module based off of [puppet-ruby](https://github.com/boxen/puppet-ruby) and [puppet-python](https://github.com/mloberg/puppet-python).
 
@@ -7,7 +7,7 @@ Install Java versions using [jenv](https://github.com/yyuu/jenv). Module based o
 Supported versions can be found [here](https://github.com/Betterment/puppet-jenv/blob/master/data/common.yaml).
 
 ```puppet
-# Install Java versions 
+# Install Java versions
 
 java::version { '1.7.0_71': }
 java::version { '1.8.0_31': }
