@@ -22,16 +22,27 @@ class java::jenv(
   }
 
   file { "${prefix}/versions":
-    ensure  => directory,
+    ensure  => 'directory',
     force   => true,
     backup  => false,
     require => Repository[$prefix],
   }
 
   file { $prefix:
-    ensure => directory,
+    ensure => 'directory',
     owner  => $boxen_user,
     require => Repository[$prefix]
   }
 
+  file {"${prefix}/plugins":
+    ensure => 'directory',
+    owner  => $boxen_user,
+    require => Repository[$prefix]    
+  }
+
+  file {"${prefix}/plugins/export":
+    ensure => 'link',
+    target => "${prefix}/available-plugins/export",
+    require => File["${prefix}/plugins"]
+  }
 }
