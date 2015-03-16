@@ -5,7 +5,6 @@
 #   include java
 #
 class java(
-  $prefix   = $java::prefix,
   $user     = $java::user,
 ) {
 
@@ -25,10 +24,14 @@ class java(
         source  => 'puppet:///modules/java/java.sh',
         mode    => '0755',
     }
+
+    # setup smart JAVA_HOME plugin
+    exec { 'jenv export plugin':
+      command => 'jenv enable-plugin export',
+      user => $user,
+      require => Class['java::jenv']
+    }
   }
-
-
-
 
   Class['java::jenv'] ->
     Java::Version <| |>
