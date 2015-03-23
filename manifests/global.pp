@@ -19,6 +19,7 @@ class java::global(
   }
 
   if $version != 'system' {
+    ensure_resource('java::version', $require_version)
     $require = Java::Version[$require_version]
   } else {
     $require = undef
