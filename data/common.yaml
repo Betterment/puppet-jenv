@@ -1,8 +1,9 @@
 ---
 java::version::alias:
   "1.7.0_71": "7u71"
+  "1.7.0_79": "7u79"
   "1.8.0_31": "8u31"
-  
+
 java::prefix: "%{::boxen_home}"
 java::user: "%{::id}"
 
