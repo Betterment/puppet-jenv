@@ -80,7 +80,7 @@ define java::version(
       require => File[$sec_dir]
     }
 
-    notice("installing to ${sys_version}")
+    notice("installing to ${jenv_versions}/${sys_version}")
 
     # add the version to jenv - use jenv's add in the future?
     file { "${jenv_versions}/${sys_version}":
