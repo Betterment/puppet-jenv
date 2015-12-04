@@ -12,10 +12,12 @@ define java::version(
   $base_download_url = 'https://s3.amazonaws.com/better-boxen/java',
 ) {
   require java
+  notice("The version is ${version}")
 
   $alias_hash = hiera_hash('java::version::alias', {})
 
   if has_key($alias_hash, $version) {
+    notice("Has key")
     $to = $alias_hash[$version]
 
     java::alias { $version:
@@ -77,6 +79,8 @@ define java::version(
       mode    => '0664',
       require => File[$sec_dir]
     }
+
+    notice("installing to ${sys_version}")
 
     # add the version to jenv - use jenv's add in the future?
     file { "${jenv_versions}/${sys_version}":

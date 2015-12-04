@@ -9,6 +9,7 @@ define java::alias (
   $version = $title,
 ) {
   require java
+  notice("Alias from ${version} to ${to}")
 
   if $to == undef {
     fail('to cannot be undefined')
