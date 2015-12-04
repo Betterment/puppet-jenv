@@ -41,17 +41,32 @@ define java::version(
     #   fail('Yosemite Requires Java 7 with a patch level >= 71 (Bug JDK-8027686)')
     # }
 
-    package {
-      "jre-${version}.dmg":
-        ensure   => present,
-        alias    => "java-jre-${version}",
-        provider => pkgdmg,
-        source   => $jre_url ;
-      "jdk-${version}.dmg":
-        ensure   => present,
-        alias    => "java-${version}",
-        provider => pkgdmg,
-        source   => $jdk_url ;
+    if (versioncmp($::java_jre_version, '1.8.0') < 0) {
+      package {
+        "jre-${version}.dmg":
+          ensure   => present,
+          alias    => "java-jre-${version}",
+          provider => pkgdmg,
+          source   => $jre_url ;
+      }
+    }
+
+    if (versioncmp($::java_version, '1.8.0') < 0) {
+      package {
+        "jdk-${version}.dmg":
+          ensure   => present,
+          alias    => "java-${version}",
+          provider => pkgdmg,
+          source   => $jdk_url ;
+      }
+
+      # add the version to jenv - use jenv's add in the future?
+      file { "${jenv_versions}/${sys_version}":
+        ensure  => $link_ensure,
+        target  => "${jdk_dir}/Contents/Home",
+        force   => true,
+        require => File["${jenv_versions}"]
+      }
     }
 
     file { $sec_dir:
@@ -76,14 +91,6 @@ define java::version(
       group   => 'wheel',
       mode    => '0664',
       require => File[$sec_dir]
-    }
-
-    # add the version to jenv - use jenv's add in the future?
-    file { "${jenv_versions}/${sys_version}":
-      ensure  => $link_ensure,
-      target  => "${jdk_dir}/Contents/Home",
-      force   => true,
-      require => File["${jenv_versions}"]
     }
   }
 }
