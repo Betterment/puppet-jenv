@@ -77,13 +77,13 @@ define java::version(
       mode    => '0664',
       require => File[$sec_dir]
     }
+  }
 
-    # add the version to jenv - use jenv's add in the future?
-    file { "${jenv_versions}/${sys_version}":
-      ensure  => $link_ensure,
-      target  => "${jdk_dir}/Contents/Home",
-      force   => true,
-      require => File["${jenv_versions}"]
-    }
+  # add the version to jenv - use jenv's add in the future?
+  file { "${jenv_versions}/${sys_version}":
+    ensure  => $link_ensure,
+    target  => "${jdk_dir}/Contents/Home",
+    force   => true,
+    require => File["${jenv_versions}"]
   }
 }
