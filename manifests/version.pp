@@ -80,7 +80,7 @@ define java::version(
       require => File[$sec_dir]
     }
 
-    notice("installing to ${jenv_versions}/${sys_version}")
+    notice("symlinking from ${jenv_versions}/${sys_version} to ${jdk_dir}/Contents/Home")
 
     # add the version to jenv - use jenv's add in the future?
     file { "${jenv_versions}/${sys_version}":
