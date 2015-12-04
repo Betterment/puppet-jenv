@@ -67,30 +67,30 @@ define java::version(
         force   => true,
         require => File["${jenv_versions}"]
       }
-    }
 
-    file { $sec_dir:
-      ensure  => 'directory',
-      owner   => 'root',
-      group   => 'wheel',
-      mode    => '0775',
-      require => Package["java-${version}"]
-    }
+      file { $sec_dir:
+        ensure  => 'directory',
+        owner   => 'root',
+        group   => 'wheel',
+        mode    => '0775',
+        require => Package["java-${version}"]
+      }
 
-    file { "${sec_dir}/local_policy.jar":
-      source  => 'puppet:///modules/java/local_policy.jar',
-      owner   => 'root',
-      group   => 'wheel',
-      mode    => '0664',
-      require => File[$sec_dir]
-    }
+      file { "${sec_dir}/local_policy.jar":
+        source  => 'puppet:///modules/java/local_policy.jar',
+        owner   => 'root',
+        group   => 'wheel',
+        mode    => '0664',
+        require => File[$sec_dir]
+      }
 
-    file { "${sec_dir}/US_export_policy.jar":
-      source  => 'puppet:///modules/java/US_export_policy.jar',
-      owner   => 'root',
-      group   => 'wheel',
-      mode    => '0664',
-      require => File[$sec_dir]
+      file { "${sec_dir}/US_export_policy.jar":
+        source  => 'puppet:///modules/java/US_export_policy.jar',
+        owner   => 'root',
+        group   => 'wheel',
+        mode    => '0664',
+        require => File[$sec_dir]
+      }
     }
   }
 }
