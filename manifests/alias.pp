@@ -27,6 +27,7 @@ define java::alias (
     /^(installed|present)$/ => 'link',
     default                 => $ensure,
   }
+  notice("link_ensure: ${link_ensure}")
 
   $sys_version = java_download_version_to_sys_version($to)
   $jdk_dir = "/Library/Java/JavaVirtualMachines/jdk${version}.jdk"
