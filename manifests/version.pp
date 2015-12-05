@@ -81,6 +81,7 @@ define java::version(
     }
 
     notice("symlinking from ${jenv_versions}/${sys_version} to ${jdk_dir}/Contents/Home")
+    notice("it's ${link_ensure} here")
 
     # add the version to jenv - use jenv's add in the future?
     file { "${jenv_versions}/${sys_version}":
