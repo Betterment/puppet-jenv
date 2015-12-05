@@ -85,7 +85,7 @@ define java::version(
 
     # add the version to jenv - use jenv's add in the future?
     file { "${jenv_versions}/${sys_version}":
-      ensure  => $link_ensure,
+      ensure  => 'link',
       target  => "${jdk_dir}/Contents/Home",
       force   => true,
       require => File["${jenv_versions}"]
